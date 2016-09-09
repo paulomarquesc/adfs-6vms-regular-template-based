@@ -1,0 +1,1 @@
+# adfs-6vms-regular-template-based
