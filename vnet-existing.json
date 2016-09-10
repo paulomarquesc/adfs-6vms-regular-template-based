@@ -23,7 +23,7 @@
   },
   "resources": [],
   "outputs": {
-    "publicIpId": {
+    "vnetId": {
       "value": "[variables('vnetId')]",
       "type": "string"
     }
