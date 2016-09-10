@@ -6,7 +6,7 @@
       "type": "string"
     },
     "availabilitySetNames": {
-      "type": "string"
+      "type": "array"
     }
   },
   "resources": [

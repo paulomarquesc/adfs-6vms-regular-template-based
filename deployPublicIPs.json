@@ -6,7 +6,7 @@
       "type": "string"
     },
     "publicIpNames": {
-      "type": "string"
+      "type": "array"
     },
     "wapPublicIpDnsHostName": {
       "type": "string"
