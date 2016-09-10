@@ -42,7 +42,8 @@
       "type": "string",
       "metadata": {
         "description": "Specifies the name of the resource group where the existing virtual network resides. When using an existing virtual network, this becomes a mandatory parameter so the deployment can find the ID of the existing virtual network."
-      }
+      },
+      "defaultValue": "n/a"
     },
     "virtualNetworkAddressRange": {
       "type": "string",
@@ -135,23 +136,32 @@
       },
       "defaultValue": "10.0.1.100"
     },
+    "wapPublicIpDnsHostName":{
+      "type": "string",
+      "metadata": {
+        "description":"Unique Public DNS Host Name of the WAP servers, this name will be part of the .location.cloudapp.azure.com namespace. E.g. contosowap, that will form contosowap.eastus.cloudapp.azure.com"
+      }
+    },
     "addcVmNamePrefix":{
       "type":"string",
       "metadata": {
         "description":"Virtual Machine name prefix for Domain Controllers"
-      }
+      },
+      "defaultValue": "dc"
     },
     "adfsVmNamePrefix":{
       "type":"string",
       "metadata": {
         "description":"Virtual Machine name prefix for ADFS servers"
-      }
+      },
+      "defaultValue": "adfs"
     },
     "wapVmNamePrefix":{
       "type":"string",
       "metadata": {
         "description":"Virtual Machine name prefix for WAP servers"
-      }
+      },
+      "defaultValue": "wap"
     },
     "addcVMsSize": {
       "type": "string",
@@ -208,7 +218,7 @@
       "adfs-as",
       "wap-as"
     ],
-    "vnetSetupURL": "[concat(variables('baseUrl'),'/vnet-',parameters('virtualNetworkUsage'),'.json')]",
+    "deployVnetURL": "[concat(variables('baseUrl'),'/vnet-',parameters('virtualNetworkUsage'),'.json')]",
     "subnets": [
       {
         "name": "[parameters('internalSubnetName')]",
@@ -282,6 +292,81 @@
           },
           "storageAccountNamePrefix": {
             "value": "[variables('storageAccountNamePrefix')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "publicIpAddressesDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('deployPublicIPsUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "publicIpNames": {
+            "value": "[variables('publicIpNames')]"
+          },
+          "wapPublicIpDnsHostName":{
+            "value": "[parameters('wapPublicIpDnsHostName')]"
+          },
+          "publicIPAddressType": {
+            "value": "[variables('publicIPAddressType')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "availabilitySetsDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('deployAvailabilitySetsUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "availabilitySetNames": {
+            "value": "[variables('availabilitySetNames')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "virtualNetworkDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('deployVnetURL')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "virtualNetworkName": {
+            "value": "[parameters('virtualNetworkName')]"
+          },
+          "virtualNetworkAddressRange": {
+            "value": "[parameters('virtualNetworkAddressRange')]"
+          },
+          "subnets": {
+            "value": "[variables('subnets')]"
+          },
+          "resourceGroupName":{
+            "value": "[parameters('virtualNetworkResourceGroupName')]"
           }
         }
       }

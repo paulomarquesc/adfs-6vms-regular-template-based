@@ -2,6 +2,44 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "publicIpNames": {
+      "type": "string"
+    },
+    "wapPublicIpDnsHostName": {
+      "type": "string"
+    },
+    "publicIPAddressType": {
+      "type": "string"
+    }
   },
-  "resources": []
+  "resources": [
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('publicIpNames')[copyIndex()]]",
+      "location": "[parameters('location')]",
+      "copy": {
+        "name": "pipCopy",
+        "count": 3
+      },
+      "properties": {
+        "publicIPAllocationMethod": "[parameters('publicIPAddressType')]"
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('publicIpNames')[3]]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "publicIPAllocationMethod": "[parameters('publicIPAddressType')]",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('wapPublicIpDnsHostName')]"
+        }
+      }
+    }
+  ]
 }
