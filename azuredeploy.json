@@ -129,13 +129,6 @@
       },
       "defaultValue": "10.0.0.200"
     },
-    "wapLoadBalancerPrivateIpAddress": {
-      "type": "string",
-      "metadata": {
-        "description": "The internal IP address of the WAP load balancer, this IP address will be statically assigned to the load balancer and must be a valid ip address within the DMZ subnet."
-      },
-      "defaultValue": "10.0.1.100"
-    },
     "wapPublicIpDnsHostName": {
       "type": "string",
       "metadata": {
@@ -407,8 +400,11 @@
           "subnetIds": {
             "value": [
               "[concat(reference('virtualNetworkDeployment').outputs.vnetId.value,'/subnets/',parameters('internalSubnetName'))]",
-              "[concat(reference('virtualNetworkDeployment').outputs.vnetId.value,'/subnets/',parameters('dmzSubnetName'))]",
+              "[concat(reference('virtualNetworkDeployment').outputs.vnetId.value,'/subnets/',parameters('dmzSubnetName'))]"
             ]
+          },
+          "adfsLoadBalancerPrivateIpAddress":{
+            "value": "[parameters('adfsLoadBalancerPrivateIpAddress')]"
           }
         }
       }

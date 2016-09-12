@@ -22,6 +22,9 @@
     },
     "subnetIds": {
       "type": "array"
+    },
+    "adfsLoadBalancerPrivateIpAddress":{
+      "type": "string"
     }
   },
   "resources": [
@@ -38,7 +41,8 @@
             "properties": {
               "subnet": {
                 "id": "[parameters('subnetIds')[0]]"
-              }
+              },
+               "privateIPAddress": "[parameters('adfsLoadBalancerPrivateIpAddress')]"
             }
           }
         ],
