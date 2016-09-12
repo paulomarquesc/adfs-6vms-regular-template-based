@@ -201,7 +201,8 @@
     "publicIpNames": [
       "addc01Pip",
       "addc02Pip",
-      "adfsLbPip",
+      "adfs01Pip",
+      "adfs02Pip",
       "wapLbPip"
     ],
     "publicIPAddressType": "Dynamic",
@@ -370,7 +371,7 @@
       "apiVersion": "2015-01-01",
       "dependsOn": [
         "Microsoft.Resources/deployments/virtualNetworkDeployment",
-        "Microsoft.Resources/deployments/publicIpAddressesDeployment",
+        "Microsoft.Resources/deployments/publicIpAddressesDeployment"
       ],
       "properties": {
         "mode": "Incremental",
@@ -403,11 +404,11 @@
               "[concat(reference('virtualNetworkDeployment').outputs.vnetId.value,'/subnets/',parameters('dmzSubnetName'))]"
             ]
           },
-          "adfsLoadBalancerPrivateIpAddress":{
+          "adfsLoadBalancerPrivateIpAddress": {
             "value": "[parameters('adfsLoadBalancerPrivateIpAddress')]"
           }
         }
       }
-    },
+    }
   ]
 }

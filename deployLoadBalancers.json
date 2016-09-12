@@ -42,7 +42,8 @@
               "subnet": {
                 "id": "[parameters('subnetIds')[0]]"
               },
-              "privateIPAddress": "[parameters('adfsLoadBalancerPrivateIpAddress')]"
+              "privateIPAddress": "[parameters('adfsLoadBalancerPrivateIpAddress')]",
+              "privateIPAllocationMethod": "Static"
             }
           }
         ],
