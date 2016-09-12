@@ -36,9 +36,6 @@
           {
             "name": "[parameters('lbfe')]",
             "properties": {
-              "publicIPAddress": {
-                "id": "[parameters('lbPublicIpResourceIds')[0]]"
-              },
               "subnet": {
                 "id": "[parameters('subnetIds')[0]]"
               }
@@ -48,32 +45,6 @@
         "backendAddressPools": [
           {
             "name": "[parameters('lbbe')]"
-          }
-        ],
-        "inboundNatRules": [
-          {
-            "name": "[parameters('rdpNats')[0]]",
-            "properties": {
-              "frontendIPConfiguration": {
-                "id": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[0]), '/frontendIPConfigurations/',parameters('lbfe'))]"
-              },
-              "protocol": "tcp",
-              "frontendPort": 5000,
-              "backendPort": 3389,
-              "enableFloatingIP": false
-            }
-          },
-          {
-            "name": "[parameters('rdpNats')[1]]",
-            "properties": {
-              "frontendIPConfiguration": {
-                "id": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[0]), '/frontendIPConfigurations/',parameters('lbfe'))]"
-              },
-              "protocol": "tcp",
-              "frontendPort": 5001,
-              "backendPort": 3389,
-              "enableFloatingIP": false
-            }
           }
         ],
         "loadBalancingRules": [
@@ -124,9 +95,6 @@
             "properties": {
               "publicIPAddress": {
                 "id": "[parameters('lbPublicIpResourceIds')[1]]"
-              },
-              "subnet": {
-                "id": "[parameters('subnetIds')[1]]"
               }
             }
           }
