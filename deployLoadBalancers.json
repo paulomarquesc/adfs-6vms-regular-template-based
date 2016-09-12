@@ -23,7 +23,7 @@
     "subnetIds": {
       "type": "array"
     },
-    "adfsLoadBalancerPrivateIpAddress":{
+    "adfsLoadBalancerPrivateIpAddress": {
       "type": "string"
     }
   },
@@ -42,7 +42,7 @@
               "subnet": {
                 "id": "[parameters('subnetIds')[0]]"
               },
-               "privateIPAddress": "[parameters('adfsLoadBalancerPrivateIpAddress')]"
+              "privateIPAddress": "[parameters('adfsLoadBalancerPrivateIpAddress')]"
             }
           }
         ],
