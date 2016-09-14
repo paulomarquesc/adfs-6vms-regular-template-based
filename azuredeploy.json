@@ -450,8 +450,7 @@
               "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[1])]",
               "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[2])]",
               "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[3])]",
-              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[4])]",
-              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[5])]"
+              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[4])]"
             ]
           },
           "subnetIds": {
