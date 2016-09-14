@@ -99,7 +99,7 @@
             "name": "[parameters('lbfe')]",
             "properties": {
               "publicIPAddress": {
-                "id": "[parameters('lbPublicIpResourceIds')[1]]"
+                "id": "[parameters('lbPublicIpResourceIds')[0]]"
               }
             }
           }

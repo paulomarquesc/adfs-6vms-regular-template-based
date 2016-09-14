@@ -238,8 +238,7 @@
       "rdpWap02"
     ],
     "lbPublicIpResourceIds": [
-      "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),variables('publicIpNames')[2])]",
-      "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),variables('publicIpNames')[3])]"
+      "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),variables('publicIpNames')[4])]"
     ],
     "creatingNICSUrl": "[concat(variables('baseUrl'),'/creatingNICS.json')]",
     "nicNames": [
