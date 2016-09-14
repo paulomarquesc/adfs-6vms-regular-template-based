@@ -240,13 +240,7 @@
     "lbPublicIpResourceIds": [
       "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),variables('publicIpNames')[4])]"
     ],
-    "creatingNICSUrl": "[concat(variables('baseUrl'),'/creatingNICS.json')]",
-    "nicNames": [
-      "addc01-nic",
-      "addc02-nic",
-      "adfs01-nic",
-      "adfs02-nic"
-    ],
+    "deployNicsUrl": "[concat(variables('baseUrl'),'/deployNics.json')]",
     "adfslbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerNames')[0])]",
     "waplbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerNames')[1])]",
     "adfsBEAddressPoolID": "[concat(variables('adfslbID'),'/backendAddressPools/',variables('lbbe'))]",
@@ -416,7 +410,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('deployLoadBalancersUrl')]",
+          "uri": "[variables('deployNicsUrl')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -466,8 +460,8 @@
               "[variables('wapRDPNATRuleIDs')]"
             ]
           },
-          "wapBEAddressPoolID":{
-            "value": "[variables('wapBEAddressPoolID')]"
+          "wapBeAddressPoolID":{
+            "value": "[variables('wapBeAddressPoolID')]"
           }
         }
       }
