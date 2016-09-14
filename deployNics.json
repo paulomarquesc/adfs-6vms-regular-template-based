@@ -2,6 +2,199 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "nicNames": {
+      "type": "array"
+    },
+    "ipAddresses": {
+      "type": "array"
+    },
+    "publicIpAddressIds": {
+      "type": "array"
+    },
+    "subnetIds": {
+      "type": "array"
+    },
+    "adfsBeAddressPoolID": {
+      "type": "string"
+    },
+    "wapBeAddressPoolID": {
+      "type": "string"
+    },
+    "wapRDPNATRuleIDs": {
+      "type": "array"
+    }
   },
-  "resources": []
+  "resources": [
+    {
+      "comments": "DC01 NIC",
+      "name": "[parameters('nicNames')[0]]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[parameters('ipAddresses')[0]]",
+              "subnet": {
+                "id": "[parameters('subnetIds')[0]]"
+              },
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('publicIpAddressIds')[0])]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "comments": "DC02 NIC",
+      "name": "[parameters('nicNames')[1]]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[parameters('ipAddresses')[1]]",
+              "subnet": {
+                "id": "[parameters('subnetIds')[0]]"
+              },
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('publicIpAddressIds')[1])]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "comments": "ADFS01 NIC",
+      "name": "[parameters('nicNames')[2]]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[parameters('ipAddresses')[2]]",
+              "subnet": {
+                "id": "[parameters('subnetIds')[0]]"
+              },
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('publicIpAddressIds')[2])]"
+              }
+            },
+            "loadBalancerBackendAddressPools": [
+              {
+                "id": "[parameters('adfsBEAddressPoolID')]"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "comments": "ADFS02 NIC",
+      "name": "[parameters('nicNames')[3]]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[parameters('ipAddresses')[3]]",
+              "subnet": {
+                "id": "[parameters('subnetIds')[0]]"
+              },
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('publicIpAddressIds')[3])]"
+              }
+            },
+            "loadBalancerBackendAddressPools": [
+              {
+                "id": "[parameters('adfsBEAddressPoolID')]"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "comments": "WAP01 NIC",
+      "name": "[parameters('nicNames')[4]]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[parameters('ipAddresses')[4]]",
+              "subnet": {
+                "id": "[parameters('subnetIds')[1]]"
+              }
+            },
+            "loadBalancerBackendAddressPools": [
+              {
+                "id": "[parameters('wapBEAddressPoolID')]"
+              }
+            ],
+            "loadBalancerInboundNatRules": [
+              {
+                "id": "[parameters('wapRDPNATRuleIDs')[0]]"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "comments": "WAP02 NIC",
+      "name": "[parameters('nicNames')[5]]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[parameters('ipAddresses')[5]]",
+              "subnet": {
+                "id": "[parameters('subnetIds')[1]]"
+              }
+            },
+            "loadBalancerBackendAddressPools": [
+              {
+                "id": "[parameters('wapBEAddressPoolID')]"
+              }
+            ],
+            "loadBalancerInboundNatRules": [
+              {
+                "id": "[parameters('wapRDPNATRuleIDs')[1]]"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }

@@ -111,7 +111,7 @@
         ],
         "inboundNatRules": [
           {
-            "name": "[parameters('rdpNats')[2]]",
+            "name": "[parameters('rdpNats')[0]]",
             "properties": {
               "frontendIPConfiguration": {
                 "id": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1]), '/frontendIPConfigurations/',parameters('lbfe'))]"
@@ -123,7 +123,7 @@
             }
           },
           {
-            "name": "[parameters('rdpNats')[3]]",
+            "name": "[parameters('rdpNats')[1]]",
             "properties": {
               "frontendIPConfiguration": {
                 "id": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1]), '/frontendIPConfigurations/',parameters('lbfe'))]"
@@ -170,5 +170,28 @@
         ]
       }
     }
-  ]
+  ],
+  "outputs": {
+    "adfsLbID": {
+      "value": "[resourceId('Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[0])]",
+      "type": "string"
+    },
+    "adfsBeAddressPoolID": {
+      "value": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[0]), '/backendAddressPools/',parameters('lbbe'))]",
+      "type": "string"
+    },
+    "wapLbID": {
+      "value": "[resourceId('Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1])]",
+      "type": "string"
+    },
+    "wapBeAddressPoolID": {
+      "value": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1]), '/backendAddressPools/',parameters('lbbe'))]",
+      "type": "string"
+    },
+    "wap01NatRuleId":{
+      "[concat(parameters('splbResourceId'),'/inboundNatRules/',parameters('RDPNAT'))]"
+            "value": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1]), '/inboundNatRules/',parameters('rdpNats')[2])]",
+      "type": "string"
+    }
+  }
 }

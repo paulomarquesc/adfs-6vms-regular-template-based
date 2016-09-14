@@ -195,7 +195,6 @@
   "variables": {
     "baseUrl": "https://raw.githubusercontent.com/paulomarquesc/adfs-6vms-regular-template-based/master/",
     "storageAccountNamePrefix": "[concat(uniquestring(resourceGroup().id),'sa')]",
-    "storageAccountCount": 3,
     "deployStorageAccountsUrl": "[concat(variables('baseUrl'),'/deployStorageAccounts.json')]",
     "deployPublicIPsUrl": "[concat(variables('baseUrl'),'/deployPublicIPs.json')]",
     "publicIpNames": [
@@ -235,8 +234,6 @@
     "lbfe": "lbfe",
     "lbbe": "lbbe",
     "rdpNats": [
-      "rdpAdfs01",
-      "rdpAdfs02",
       "rdpWap01",
       "rdpWap02"
     ],
@@ -254,11 +251,10 @@
     "adfslbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerNames')[0])]",
     "waplbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerNames')[1])]",
     "adfsBEAddressPoolID": "[concat(variables('adfslbID'),'/backendAddressPools/',variables('lbbe'))]",
-    "adfsRDPNATRuleIDs": [
+    "wapBEAddressPoolID": "[concat(variables('waplbID'),'/backendAddressPools/',variables('lbbe'))]",
+    "wapRDPNATRuleIDs": [
       "[concat(variables('adfslbID'),'/inboundNatRules/',variables('rdpNats')[0])]",
-      "[concat(variables('adfslbID'),'/inboundNatRules/',variables('rdpNats')[1])]",
-      "[concat(variables('adfslbID'),'/inboundNatRules/',variables('rdpNats')[2])]",
-      "[concat(variables('adfslbID'),'/inboundNatRules/',variables('rdpNats')[3])]"
+      "[concat(variables('adfslbID'),'/inboundNatRules/',variables('rdpNats')[1])]"
     ],
     "deployAddcUrl": "[concat(variables('baseUrl'),'/deployADDC.json')]",
     "adDataDisks": [
@@ -406,6 +402,72 @@
           },
           "adfsLoadBalancerPrivateIpAddress": {
             "value": "[parameters('adfsLoadBalancerPrivateIpAddress')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "nicsDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/virtualNetworkDeployment",
+        "Microsoft.Resources/deployments/loadBalancerDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('deployLoadBalancersUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "ipAddresses": {
+            "value": [
+              "[parameters('addc01NicIPAddress')]",
+              "[parameters('addc02NicIPAddress')]",
+              "[parameters('adfs01NicIPAddress')]",
+              "[parameters('adfs02NicIPAddress')]",
+              "[parameters('wap01NicIPAddress')]",
+              "[parameters('wap02NicIPAddress')]"
+            ]
+          },
+          "nicNames": {
+            "value": [
+              "[concat(parameters('addcVmNamePrefix'),'01-nic')]",
+              "[concat(parameters('addcVmNamePrefix'),'02-nic')]",
+              "[concat(parameters('adfsVmNamePrefix'),'01-nic')]",
+              "[concat(parameters('adfsVmNamePrefix'),'02-nic')]",
+              "[concat(parameters('wapVmNamePrefix'),'01-nic')]",
+              "[concat(parameters('wapVmNamePrefix'),'02-nic')]"
+            ]
+          },
+          "publicIpAddressIds": {
+            "value": [
+              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[0])]",
+              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[1])]",
+              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[2])]",
+              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[3])]",
+              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[4])]",
+              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[5])]"
+            ]
+          },
+          "subnetIds": {
+            "value": [
+              "[concat(reference('virtualNetworkDeployment').outputs.vnetId.value,'/subnets/',parameters('internalSubnetName'))]",
+              "[concat(reference('virtualNetworkDeployment').outputs.vnetId.value,'/subnets/',parameters('dmzSubnetName'))]"
+            ]
+          },
+          "adfsBEAddressPoolID": {
+            "value": "[variables('adfsBEAddressPoolID')]"
+          },
+          "wapRDPNATRuleIDs":{
+            "value": "[variables('wapRDPNATRuleIDs')]"
+          },
+          "wapBEAddressPoolID":{
+            "value": "[variables('wapBEAddressPoolID')]"
           }
         }
       }
