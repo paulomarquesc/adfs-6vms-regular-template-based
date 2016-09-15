@@ -216,13 +216,19 @@
       {
         "name": "[parameters('internalSubnetName')]",
         "properties": {
-          "addressPrefix": "[parameters('internalSubnetAddressRange')]"
+          "addressPrefix": "[parameters('internalSubnetAddressRange')]",
+          "networkSecurityGroup": {
+            "id": "[resourceId('Microsoft.Network/networkSecurityGroups','Internal-sn-nsg')]"
+          }
         }
       },
       {
         "name": "[parameters('dmzSubnetName')]",
         "properties": {
-          "addressPrefix": "[parameters('dmzSubnetAddressRange')]"
+          "addressPrefix": "[parameters('dmzSubnetAddressRange')]",
+          "networkSecurityGroup": {
+            "id": "[resourceId('Microsoft.Network/networkSecurityGroups','DMZ-sn-nsg')]"
+          }
         }
       }
     ],
@@ -249,11 +255,8 @@
       "[concat(variables('adfslbID'),'/inboundNatRules/',variables('rdpNats')[0])]",
       "[concat(variables('adfslbID'),'/inboundNatRules/',variables('rdpNats')[1])]"
     ],
-    "deployAddcUrl": "[concat(variables('baseUrl'),'/deployADDC.json')]",
-    "adDataDisks": [
-      "[concat(parameters('addcVmNamePrefix'),1,'-datadisk')]",
-      "[concat(parameters('addcVmNamePrefix'),2,'-datadisk')]"
-    ]
+    "deployNsgsUrl": "[concat(variables('baseUrl'),'/deployNsgs.json')]",
+    "deployAddcUrl": "[concat(variables('baseUrl'),'/deployADDC.json')]"
   },
   "resources": [
     {
@@ -329,6 +332,9 @@
       "name": "virtualNetworkDeployment",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/nsgDeployment"
+      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -463,6 +469,29 @@
           }
         }
       }
-    }
+    },
+    {
+      "name": "nsgDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('deployNsgsUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "dmzSubnetAddressRange": {
+            "value": "[parameters('dmzSubnetAddressRange')]"
+          },
+          "internalSubnetAddressRange":{
+            "value": "[parameters('internalSubnetAddressRange')]"
+          }
+        }
+      }
+    },
   ]
 }
