@@ -80,7 +80,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',parameters('addcVmNamePrefix'),copyIndex(1),'-nic')]"
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('addcVmNamePrefix'),copyIndex(1)),'-nic')]"
             }
           ]
         },
