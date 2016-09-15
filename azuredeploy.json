@@ -455,12 +455,10 @@
           "adfsBEAddressPoolID": {
             "value": "[variables('adfsBEAddressPoolID')]"
           },
-          "wapRDPNATRuleIDs":{
-            "value": [
-              "[variables('wapRDPNATRuleIDs')]"
-            ]
+          "wapRDPNATRuleIDs": {
+            "value": "[variables('wapRDPNATRuleIDs')]"
           },
-          "wapBeAddressPoolID":{
+          "wapBeAddressPoolID": {
             "value": "[variables('wapBeAddressPoolID')]"
           }
         }
