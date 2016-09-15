@@ -59,19 +59,6 @@
                             "priority": 1200,
                             "direction": "Outbound"
                         }
-                    },
-                    {
-                        "name": "DenyInternetOutbound",
-                        "properties": {
-                            "protocol": "Tcp",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "*",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "Internet",
-                            "access": "Deny",
-                            "priority": 5000,
-                            "direction": "Outbound"
-                        }
                     }
                 ]
             }
@@ -160,19 +147,6 @@
                             "destinationAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 1200,
-                            "direction": "Outbound"
-                        }
-                    },
-                    {
-                        "name": "DenyInternetOutbound",
-                        "properties": {
-                            "protocol": "Tcp",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "*",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "Internet",
-                            "access": "Deny",
-                            "priority": 5000,
                             "direction": "Outbound"
                         }
                     }
