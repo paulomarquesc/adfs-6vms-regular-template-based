@@ -576,7 +576,7 @@
       }
     },
     {
-      "name": "adfsVmsDeployment",
+      "name": "wapVmsDeployment",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
