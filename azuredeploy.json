@@ -256,7 +256,7 @@
       "[concat(variables('adfslbID'),'/inboundNatRules/',variables('rdpNats')[1])]"
     ],
     "deployNsgsUrl": "[concat(variables('baseUrl'),'/deployNsgs.json')]",
-    "deployAddcUrl": "[concat(variables('baseUrl'),'/deployADDC.json')]"
+    "deployVmsUrl": "[concat(variables('baseUrl'),'/deployVms.json')]"
   },
   "resources": [
     {
@@ -503,7 +503,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('deployAddcUrl')]",
+          "uri": "[variables('deployVmsUrl')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -516,14 +516,96 @@
           "adminPassword": {
             "value": "[parameters('adminPassword')]"
           },
-          "addcVmNamePrefix": {
+          "vmNamePrefix": {
             "value": "[parameters('addcVmNamePrefix')]"
           },
-          "addcVMsSize": {
+          "vmSize": {
             "value": "[parameters('addcVMsSize')]"
           },
-          "addcAvailabilitySetName": {
+          "availabilitySetName": {
             "value": "[variables('availabilitySetNames')[0]]"
+          },
+          "vmCount": {
+            "value": 2
+          },
+          "storageAccountNamePrefix": {
+            "value": "[variables('storageAccountNamePrefix')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "adfsVmsDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/nicsDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('deployVmsUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "vmNamePrefix": {
+            "value": "[parameters('adfsVmNamePrefix')]"
+          },
+          "vmSize": {
+            "value": "[parameters('adfsVMsSize')]"
+          },
+          "availabilitySetName": {
+            "value": "[variables('availabilitySetNames')[1]]"
+          },
+          "vmCount": {
+            "value": 2
+          },
+          "storageAccountNamePrefix": {
+            "value": "[variables('storageAccountNamePrefix')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "adfsVmsDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/nicsDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('deployVmsUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "vmNamePrefix": {
+            "value": "[parameters('wapVmNamePrefix')]"
+          },
+          "vmSize": {
+            "value": "[parameters('wapVMsSize')]"
+          },
+          "availabilitySetName": {
+            "value": "[variables('availabilitySetNames')[2]]"
           },
           "vmCount": {
             "value": 2

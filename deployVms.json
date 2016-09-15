@@ -11,13 +11,13 @@
     "adminPassword": {
       "type": "securestring"
     },
-    "addcVmNamePrefix": {
+    "vmNamePrefix": {
       "type": "string"
     },
-    "addcVMsSize": {
+    "vmSize": {
       "type": "string"
     },
-    "addcAvailabilitySetName": {
+    "availabilitySetName": {
       "type": "string"
     },
     "vmCount": {
@@ -31,7 +31,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(parameters('addcVmNamePrefix'),copyIndex(1))]",
+      "name": "[concat(parameters('vmNamePrefix'),copyIndex(1))]",
       "location": "[parameters('location')]",
       "copy": {
         "name": "addcCopy",
@@ -39,13 +39,13 @@
       },
       "properties": {
         "hardwareProfile": {
-          "vmSize": "[parameters('addcVMsSize')]"
+          "vmSize": "[parameters('vmSize')]"
         },
         "availabilitySet": {
-          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('addcAvailabilitySetName'))]"
+          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName'))]"
         },
         "osProfile": {
-          "computerName": "[concat(parameters('addcVmNamePrefix'),copyIndex(1))]",
+          "computerName": "[concat(parameters('vmNamePrefix'),copyIndex(1))]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
@@ -57,7 +57,7 @@
             "version": "latest"
           },
           "osDisk": {
-            "name": "[concat(parameters('addcVmNamePrefix'),copyIndex(),'-osdisk')]",
+            "name": "[concat(parameters('vmNamePrefix'),copyIndex(),'-osdisk')]",
             "vhd": {
               "uri": "[concat('http://',parameters('storageAccountNamePrefix'),copyIndex(1),'.blob.core.windows.net/vhds/',parameters('addcVmNamePrefix'),copyIndex(1),'-osdisk.vhd')]"
             },
@@ -66,7 +66,7 @@
           },
           "dataDisks": [
             {
-              "name": "[concat(parameters('addcVmNamePrefix'),copyIndex(1),'-datadisk')]",
+              "name": "[concat(parameters('vmNamePrefix'),copyIndex(1),'-datadisk')]",
               "vhd": {
                 "uri": "[concat('http://',parameters('storageAccountNamePrefix'),copyIndex(1),'.blob.core.windows.net/vhds/', parameters('addcVmNamePrefix'),copyIndex(1),'-datadisk.vhd')]"
               },
@@ -80,7 +80,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('addcVmNamePrefix'),copyIndex(1),'-nic'))]"
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('vmNamePrefix'),copyIndex(1),'-nic'))]"
             }
           ]
         },
