@@ -235,7 +235,7 @@
     "deployLoadBalancersUrl": "[concat(variables('baseUrl'),'/deployLoadBalancers.json')]",
     "loadBalancerNames": [
       "adfs-lb",
-      "wap-lab"
+      "wap-lb"
     ],
     "lbfe": "lbfe",
     "lbbe": "lbbe",
