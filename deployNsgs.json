@@ -39,11 +39,24 @@
                         "properties": {
                             "protocol": "Tcp",
                             "sourcePortRange": "*",
-                            "destinationPortRange": "*",
+                            "destinationPortRange": "443",
                             "sourceAddressPrefix": "[parameters('dmzSubnetAddressRange')]",
                             "destinationAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 200,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "AllowAzureLoadBalancerInBound",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "AzureLoadBalancer",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 300,
                             "direction": "Inbound"
                         }
                     },
