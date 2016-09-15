@@ -2,6 +2,95 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "adminUsername": {
+      "type": "string"
+    },
+    "adminPassword": {
+      "type": "securestring"
+    },
+    "addcVmNamePrefix": {
+      "type": "string"
+    },
+    "addcVMsSize": {
+      "type": "string"
+    },
+    "addcAvailabilitySetName": {
+      "type": "string"
+    },
+    "vmCount": {
+      "type": "int"
+    },
+    "storageAccountNamePrefix": {
+      "type": "string"
+    }
   },
-  "resources": []
+  "resources": [
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[concat(parameters('addcVmNamePrefix'),copyIndex(1))]",
+      "location": "[parameters('location')]",
+      "copy": {
+        "name": "addcCopy",
+        "count": "[parameters('vmCount')]"
+      },
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('addcVMsSize')]"
+        },
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('addcAvailabilitySetName'))]"
+        },
+        "osProfile": {
+          "computerName": "[concat(parameters('addcVmNamePrefix'),copyIndex(1))]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "2012-R2-Datacenter",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "[concat(parameters('addcVmNamePrefix'),copyIndex(),'-osdisk')]",
+            "vhd": {
+              "uri": "[concat('http://',parameters('storageAccountNamePrefix'),copyIndex(1),'.blob.core.windows.net/vhds/',parameters('addcVmNamePrefix'),copyIndex(1),'-osdisk.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "name": "[concat(parameters('addcVmNamePrefix'),copyIndex(1),'-datadisk')]",
+              "vhd": {
+                "uri": "[concat('http://',parameters('storageAccountNamePrefix'),copyIndex(1),'.blob.core.windows.net/vhds/', parameters('addcVmNamePrefix'),copyIndex(1),'-datadisk.vhd')]"
+              },
+              "caching": "None",
+              "createOption": "empty",
+              "diskSizeGB": 127,
+              "lun": 0
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',parameters('addcVmNamePrefix'),copyIndex(1),'-nic')]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "true",
+            "storageUri": "[concat('http://',parameters('storageAccountNamePrefix'),'3.blob.core.windows.net')]"
+          }
+        }
+      }
+    }
+  ]
 }

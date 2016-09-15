@@ -435,12 +435,12 @@
           },
           "nicNames": {
             "value": [
-              "[concat(parameters('addcVmNamePrefix'),'01-nic')]",
-              "[concat(parameters('addcVmNamePrefix'),'02-nic')]",
-              "[concat(parameters('adfsVmNamePrefix'),'01-nic')]",
-              "[concat(parameters('adfsVmNamePrefix'),'02-nic')]",
-              "[concat(parameters('wapVmNamePrefix'),'01-nic')]",
-              "[concat(parameters('wapVmNamePrefix'),'02-nic')]"
+              "[concat(parameters('addcVmNamePrefix'),'1-nic')]",
+              "[concat(parameters('addcVmNamePrefix'),'2-nic')]",
+              "[concat(parameters('adfsVmNamePrefix'),'1-nic')]",
+              "[concat(parameters('adfsVmNamePrefix'),'2-nic')]",
+              "[concat(parameters('wapVmNamePrefix'),'1-nic')]",
+              "[concat(parameters('wapVmNamePrefix'),'2-nic')]"
             ]
           },
           "publicIpAddressIds": {
@@ -487,11 +487,52 @@
           "dmzSubnetAddressRange": {
             "value": "[parameters('dmzSubnetAddressRange')]"
           },
-          "internalSubnetAddressRange":{
+          "internalSubnetAddressRange": {
             "value": "[parameters('internalSubnetAddressRange')]"
           }
         }
       }
     },
+    {
+      "name": "addcVmsDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/nicsDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('deployAddcUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "addcVmNamePrefix": {
+            "value": "[parameters('addcVmNamePrefix')]"
+          },
+          "addcVMsSize": {
+            "value": "[parameters('addcVMsSize')]"
+          },
+          "addcAvailabilitySetName": {
+            "value": "[variables('availabilitySetNames')[0]]"
+          },
+          "vmCount": {
+            "value": 2
+          },
+          "storageAccountNamePrefix": {
+            "value": "[variables('storageAccountNamePrefix')]"
+          }
+        }
+      }
+    }
   ]
 }
