@@ -35,10 +35,7 @@
       "name": "[parameters('publicIpNames')[4]]",
       "location": "[parameters('location')]",
       "properties": {
-        "publicIPAllocationMethod": "[parameters('publicIPAddressType')]",
-        "dnsSettings": {
-          "domainNameLabel": "[parameters('wapPublicIpDnsHostName')]"
-        }
+        "publicIPAllocationMethod": "[parameters('publicIPAddressType')]"
       }
     }
   ]

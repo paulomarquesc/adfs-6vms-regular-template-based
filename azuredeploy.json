@@ -129,12 +129,6 @@
       },
       "defaultValue": "10.0.0.200"
     },
-    "wapPublicIpDnsHostName": {
-      "type": "string",
-      "metadata": {
-        "description": "Unique Public DNS Host Name of the WAP servers, this name will be part of the .location.cloudapp.azure.com namespace. E.g. contosowap, that will form contosowap.eastus.cloudapp.azure.com"
-      }
-    },
     "addcVmNamePrefix": {
       "type": "string",
       "metadata": {
