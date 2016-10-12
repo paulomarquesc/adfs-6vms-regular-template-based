@@ -196,6 +196,12 @@
         ]
       }
     }
-  ]
+  ],
+   "outputs": {
+    "fqdn": {
+      "value": "[parameters('adfsBEAddressPoolID')]",
+      "type": "string"
+    }
+  }
   
 }
