@@ -293,9 +293,6 @@
           "publicIpNames": {
             "value": "[variables('publicIpNames')]"
           },
-          "wapPublicIpDnsHostName": {
-            "value": "[parameters('wapPublicIpDnsHostName')]"
-          },
           "publicIPAddressType": {
             "value": "[variables('publicIPAddressType')]"
           }
