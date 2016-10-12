@@ -8,9 +8,6 @@
     "publicIpNames": {
       "type": "array"
     },
-    "wapPublicIpDnsHostName": {
-      "type": "string"
-    },
     "publicIPAddressType": {
       "type": "string"
     }
