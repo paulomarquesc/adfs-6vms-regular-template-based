@@ -450,13 +450,16 @@
             ]
           },
           "adfsBEAddressPoolID": {
-            "value": "[variables('adfsBEAddressPoolID')]"
+            "value": "[concat(reference('loadBalancerDeployment').outputs.adfslbID.value,'/backendAddressPools/',variables('lbbe'))]"
           },
           "wapRDPNATRuleIDs": {
-            "value": "[variables('wapRDPNATRuleIDs')]"
+            "value": [
+              "[concat(reference('loadBalancerDeployment').outputs.waplbID.value,'/inboundNatRules/',variables('rdpNats')[0])]",
+              "[concat(reference('loadBalancerDeployment').outputs.waplbID.value,'/inboundNatRules/',variables('rdpNats')[1])]"
+            ]
           },
           "wapBeAddressPoolID": {
-            "value": "[variables('wapBeAddressPoolID')]"
+            "value": "[concat(reference('loadBalancerDeployment').outputs.waplbID.value,'/backendAddressPools/',variables('lbbe'))]"
           }
         }
       }
