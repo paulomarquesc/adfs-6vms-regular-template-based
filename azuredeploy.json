@@ -464,70 +464,70 @@
         }
       }
     },
-    {
-      "name": "nsgDeployment",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('deployNsgsUrl')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "location": {
-            "value": "[parameters('location')]"
-          },
-          "dmzSubnetAddressRange": {
-            "value": "[parameters('dmzSubnetAddressRange')]"
-          },
-          "internalSubnetAddressRange": {
-            "value": "[parameters('internalSubnetAddressRange')]"
-          }
-        }
-      }
-    },
-    {
-      "name": "addcVmsDeployment",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "dependsOn": [
-        "Microsoft.Resources/deployments/nicsDeployment"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('deployVmsUrl')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "location": {
-            "value": "[parameters('location')]"
-          },
-          "adminUsername": {
-            "value": "[parameters('adminUsername')]"
-          },
-          "adminPassword": {
-            "value": "[parameters('adminPassword')]"
-          },
-          "vmNamePrefix": {
-            "value": "[parameters('addcVmNamePrefix')]"
-          },
-          "vmSize": {
-            "value": "[parameters('addcVMsSize')]"
-          },
-          "availabilitySetName": {
-            "value": "[variables('availabilitySetNames')[0]]"
-          },
-          "vmCount": {
-            "value": 2
-          },
-          "storageAccountNamePrefix": {
-            "value": "[variables('storageAccountNamePrefix')]"
-          }
-        }
-      }
-    },
+    // {
+    //   "name": "nsgDeployment",
+    //   "type": "Microsoft.Resources/deployments",
+    //   "apiVersion": "2015-01-01",
+    //   "properties": {
+    //     "mode": "Incremental",
+    //     "templateLink": {
+    //       "uri": "[variables('deployNsgsUrl')]",
+    //       "contentVersion": "1.0.0.0"
+    //     },
+    //     "parameters": {
+    //       "location": {
+    //         "value": "[parameters('location')]"
+    //       },
+    //       "dmzSubnetAddressRange": {
+    //         "value": "[parameters('dmzSubnetAddressRange')]"
+    //       },
+    //       "internalSubnetAddressRange": {
+    //         "value": "[parameters('internalSubnetAddressRange')]"
+    //       }
+    //     }
+    //   }
+    // },
+    // {
+    //   "name": "addcVmsDeployment",
+    //   "type": "Microsoft.Resources/deployments",
+    //   "apiVersion": "2015-01-01",
+    //   "dependsOn": [
+    //     "Microsoft.Resources/deployments/nicsDeployment"
+    //   ],
+    //   "properties": {
+    //     "mode": "Incremental",
+    //     "templateLink": {
+    //       "uri": "[variables('deployVmsUrl')]",
+    //       "contentVersion": "1.0.0.0"
+    //     },
+    //     "parameters": {
+    //       "location": {
+    //         "value": "[parameters('location')]"
+    //       },
+    //       "adminUsername": {
+    //         "value": "[parameters('adminUsername')]"
+    //       },
+    //       "adminPassword": {
+    //         "value": "[parameters('adminPassword')]"
+    //       },
+    //       "vmNamePrefix": {
+    //         "value": "[parameters('addcVmNamePrefix')]"
+    //       },
+    //       "vmSize": {
+    //         "value": "[parameters('addcVMsSize')]"
+    //       },
+    //       "availabilitySetName": {
+    //         "value": "[variables('availabilitySetNames')[0]]"
+    //       },
+    //       "vmCount": {
+    //         "value": 2
+    //       },
+    //       "storageAccountNamePrefix": {
+    //         "value": "[variables('storageAccountNamePrefix')]"
+    //       }
+    //     }
+    //   }
+    // },
     {
       "name": "adfsVmsDeployment",
       "type": "Microsoft.Resources/deployments",
@@ -568,47 +568,47 @@
           }
         }
       }
-    },
-    {
-      "name": "wapVmsDeployment",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "dependsOn": [
-        "Microsoft.Resources/deployments/nicsDeployment"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('deployVmsUrl')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "location": {
-            "value": "[parameters('location')]"
-          },
-          "adminUsername": {
-            "value": "[parameters('adminUsername')]"
-          },
-          "adminPassword": {
-            "value": "[parameters('adminPassword')]"
-          },
-          "vmNamePrefix": {
-            "value": "[parameters('wapVmNamePrefix')]"
-          },
-          "vmSize": {
-            "value": "[parameters('wapVMsSize')]"
-          },
-          "availabilitySetName": {
-            "value": "[variables('availabilitySetNames')[2]]"
-          },
-          "vmCount": {
-            "value": 2
-          },
-          "storageAccountNamePrefix": {
-            "value": "[variables('storageAccountNamePrefix')]"
-          }
-        }
-      }
     }
+    // {
+    //   "name": "wapVmsDeployment",
+    //   "type": "Microsoft.Resources/deployments",
+    //   "apiVersion": "2015-01-01",
+    //   "dependsOn": [
+    //     "Microsoft.Resources/deployments/nicsDeployment"
+    //   ],
+    //   "properties": {
+    //     "mode": "Incremental",
+    //     "templateLink": {
+    //       "uri": "[variables('deployVmsUrl')]",
+    //       "contentVersion": "1.0.0.0"
+    //     },
+    //     "parameters": {
+    //       "location": {
+    //         "value": "[parameters('location')]"
+    //       },
+    //       "adminUsername": {
+    //         "value": "[parameters('adminUsername')]"
+    //       },
+    //       "adminPassword": {
+    //         "value": "[parameters('adminPassword')]"
+    //       },
+    //       "vmNamePrefix": {
+    //         "value": "[parameters('wapVmNamePrefix')]"
+    //       },
+    //       "vmSize": {
+    //         "value": "[parameters('wapVMsSize')]"
+    //       },
+    //       "availabilitySetName": {
+    //         "value": "[variables('availabilitySetNames')[2]]"
+    //       },
+    //       "vmCount": {
+    //         "value": 2
+    //       },
+    //       "storageAccountNamePrefix": {
+    //         "value": "[variables('storageAccountNamePrefix')]"
+    //       }
+    //     }
+    //   }
+    // }
   ]
 }
