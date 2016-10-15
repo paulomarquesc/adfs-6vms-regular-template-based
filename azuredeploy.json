@@ -241,14 +241,14 @@
       "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),variables('publicIpNames')[4])]"
     ],
     "deployNicsUrl": "[concat(variables('baseUrl'),'/deployNics.json')]",
-    "adfslbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerNames')[0])]",
-    "waplbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerNames')[1])]",
-    "adfsBEAddressPoolID": "[concat(variables('adfslbID'),'/backendAddressPools/',variables('lbbe'))]",
-    "wapBEAddressPoolID": "[concat(variables('waplbID'),'/backendAddressPools/',variables('lbbe'))]",
-    "wapRDPNATRuleIDs": [
-      "[concat(variables('adfslbID'),'/inboundNatRules/',variables('rdpNats')[0])]",
-      "[concat(variables('adfslbID'),'/inboundNatRules/',variables('rdpNats')[1])]"
-    ],
+    // "adfslbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerNames')[0])]",
+    // "waplbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerNames')[1])]",
+    // "adfsBEAddressPoolID": "[concat(variables('adfslbID'),'/backendAddressPools/',variables('lbbe'))]",
+    // "wapBEAddressPoolID": "[concat(variables('waplbID'),'/backendAddressPools/',variables('lbbe'))]",
+    // "wapRDPNATRuleIDs": [
+    //   "[concat(variables('adfslbID'),'/inboundNatRules/',variables('rdpNats')[0])]",
+    //   "[concat(variables('adfslbID'),'/inboundNatRules/',variables('rdpNats')[1])]"
+    // ],
     "deployNsgsUrl": "[concat(variables('baseUrl'),'/deployNsgs.json')]",
     "deployVmsUrl": "[concat(variables('baseUrl'),'/deployVms.json')]"
   },
