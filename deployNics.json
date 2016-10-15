@@ -94,13 +94,13 @@
               },
               "publicIPAddress": {
                 "id": "[parameters('publicIpAddressIds')[2]]"
-              }
-            },
-            "loadBalancerBackendAddressPools": [
-              {
-                "id": "[parameters('adfsBEAddressPoolID')]"
-              }
-            ]
+              },
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "[parameters('adfsBEAddressPoolID')]"
+                }
+              ]
+            }
           }
         ]
       }
@@ -123,13 +123,13 @@
               },
               "publicIPAddress": {
                 "id": "[parameters('publicIpAddressIds')[3]]"
-              }
-            },
-            "loadBalancerBackendAddressPools": [
-              {
-                "id": "[parameters('adfsBEAddressPoolID')]"
-              }
-            ]
+              },
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "[parameters('adfsBEAddressPoolID')]"
+                }
+              ]
+            }
           }
         ]
       }
@@ -149,18 +149,18 @@
               "privateIPAddress": "[parameters('ipAddresses')[4]]",
               "subnet": {
                 "id": "[parameters('subnetIds')[1]]"
-              }
-            },
-            "loadBalancerBackendAddressPools": [
-              {
-                "id": "[parameters('wapBEAddressPoolID')]"
-              }
-            ],
-            "loadBalancerInboundNatRules": [
-              {
-                "id": "[parameters('wapRDPNATRuleIDs')[0]]"
-              }
-            ]
+              },
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "[parameters('wapBEAddressPoolID')]"
+                }
+              ],
+              "loadBalancerInboundNatRules": [
+                {
+                  "id": "[parameters('wapRDPNATRuleIDs')[0]]"
+                }
+              ]
+            }
           }
         ]
       }
@@ -180,28 +180,27 @@
               "privateIPAddress": "[parameters('ipAddresses')[5]]",
               "subnet": {
                 "id": "[parameters('subnetIds')[1]]"
-              }
-            },
-            "loadBalancerBackendAddressPools": [
-              {
-                "id": "[parameters('wapBEAddressPoolID')]"
-              }
-            ],
-            "loadBalancerInboundNatRules": [
-              {
-                "id": "[parameters('wapRDPNATRuleIDs')[1]]"
-              }
-            ]
+              },
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "[parameters('wapBEAddressPoolID')]"
+                }
+              ],
+              "loadBalancerInboundNatRules": [
+                {
+                  "id": "[parameters('wapRDPNATRuleIDs')[1]]"
+                }
+              ]
+            }
           }
         ]
       }
     }
   ],
-   "outputs": {
+  "outputs": {
     "fqdn": {
       "value": "[parameters('adfsBEAddressPoolID')]",
       "type": "string"
     }
   }
-  
 }
