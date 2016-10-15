@@ -394,7 +394,8 @@
       "apiVersion": "2015-01-01",
       "dependsOn": [
         "Microsoft.Resources/deployments/virtualNetworkDeployment",
-        "Microsoft.Resources/deployments/loadBalancerDeployment"
+        "Microsoft.Resources/deployments/loadBalancerDeployment",
+        "Microsoft.Resources/deployments/availabilitySetsDeployment"
       ],
       "properties": {
         "mode": "Incremental",
