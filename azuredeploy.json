@@ -487,47 +487,47 @@
         }
       }
     },
-    {
-      "name": "addcVmsDeployment",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "dependsOn": [
-        "Microsoft.Resources/deployments/nicsDeployment"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('deployVmsUrl')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "location": {
-            "value": "[parameters('location')]"
-          },
-          "adminUsername": {
-            "value": "[parameters('adminUsername')]"
-          },
-          "adminPassword": {
-            "value": "[parameters('adminPassword')]"
-          },
-          "vmNamePrefix": {
-            "value": "[parameters('addcVmNamePrefix')]"
-          },
-          "vmSize": {
-            "value": "[parameters('addcVMsSize')]"
-          },
-          "availabilitySetName": {
-            "value": "[variables('availabilitySetNames')[0]]"
-          },
-          "vmCount": {
-            "value": 2
-          },
-          "storageAccountNamePrefix": {
-            "value": "[variables('storageAccountNamePrefix')]"
-          }
-        }
-      }
-    },
+    // {
+    //   "name": "addcVmsDeployment",
+    //   "type": "Microsoft.Resources/deployments",
+    //   "apiVersion": "2015-01-01",
+    //   "dependsOn": [
+    //     "Microsoft.Resources/deployments/nicsDeployment"
+    //   ],
+    //   "properties": {
+    //     "mode": "Incremental",
+    //     "templateLink": {
+    //       "uri": "[variables('deployVmsUrl')]",
+    //       "contentVersion": "1.0.0.0"
+    //     },
+    //     "parameters": {
+    //       "location": {
+    //         "value": "[parameters('location')]"
+    //       },
+    //       "adminUsername": {
+    //         "value": "[parameters('adminUsername')]"
+    //       },
+    //       "adminPassword": {
+    //         "value": "[parameters('adminPassword')]"
+    //       },
+    //       "vmNamePrefix": {
+    //         "value": "[parameters('addcVmNamePrefix')]"
+    //       },
+    //       "vmSize": {
+    //         "value": "[parameters('addcVMsSize')]"
+    //       },
+    //       "availabilitySetName": {
+    //         "value": "[variables('availabilitySetNames')[0]]"
+    //       },
+    //       "vmCount": {
+    //         "value": 2
+    //       },
+    //       "storageAccountNamePrefix": {
+    //         "value": "[variables('storageAccountNamePrefix')]"
+    //       }
+    //     }
+    //   }
+    // },
     {
       "name": "adfsVmsDeployment",
       "type": "Microsoft.Resources/deployments",
