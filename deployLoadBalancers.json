@@ -57,10 +57,10 @@
             "name": "http-443",
             "properties": {
               "frontendIPConfiguration": {
-                "id": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[0]), '/frontendIPConfigurations/',parameters('lbfe'))]"
+                "id": "[concat(resourceid('Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[0]), '/frontendIPConfigurations/',parameters('lbfe'))]"
               },
               "backendAddressPool": {
-                "id": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[0]), '/backendAddressPools/',parameters('lbbe'))]"
+                "id": "[concat(resourceid('Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[0]), '/backendAddressPools/',parameters('lbbe'))]"
               },
               "protocol": "Tcp",
               "frontendPort": 443,
@@ -68,7 +68,7 @@
               "enableFloatingIP": false,
               "idleTimeoutInMinutes": 5,
               "probe": {
-                "id": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[0]), '/probes/ilbAdfsProbe')]"
+                "id": "[concat(resourceid('Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[0]), '/probes/ilbAdfsProbe')]"
               }
             }
           }
@@ -114,7 +114,7 @@
             "name": "[parameters('rdpNats')[0]]",
             "properties": {
               "frontendIPConfiguration": {
-                "id": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1]), '/frontendIPConfigurations/',parameters('lbfe'))]"
+                "id": "[concat(resourceid('Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1]), '/frontendIPConfigurations/',parameters('lbfe'))]"
               },
               "protocol": "tcp",
               "frontendPort": 5000,
@@ -126,7 +126,7 @@
             "name": "[parameters('rdpNats')[1]]",
             "properties": {
               "frontendIPConfiguration": {
-                "id": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1]), '/frontendIPConfigurations/',parameters('lbfe'))]"
+                "id": "[concat(resourceid('Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1]), '/frontendIPConfigurations/',parameters('lbfe'))]"
               },
               "protocol": "tcp",
               "frontendPort": 5001,
@@ -140,10 +140,10 @@
             "name": "http-443",
             "properties": {
               "frontendIPConfiguration": {
-                "id": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1]), '/frontendIPConfigurations/',parameters('lbfe'))]"
+                "id": "[concat(resourceid('Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1]), '/frontendIPConfigurations/',parameters('lbfe'))]"
               },
               "backendAddressPool": {
-                "id": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1]), '/backendAddressPools/',parameters('lbbe'))]"
+                "id": "[concat(resourceid('Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1]), '/backendAddressPools/',parameters('lbbe'))]"
               },
               "protocol": "Tcp",
               "frontendPort": 443,
@@ -151,7 +151,7 @@
               "enableFloatingIP": false,
               "idleTimeoutInMinutes": 5,
               "probe": {
-                "id": "[concat(resourceid(resourceGroup().name,'Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1]), '/probes/ilbWapProbe')]"
+                "id": "[concat(resourceid('Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1]), '/probes/ilbWapProbe')]"
               }
             }
           }
@@ -177,7 +177,7 @@
       "type": "string"
     },
     "waplbID": {
-      "value": "[resourceId('Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[0])]",
+      "value": "[resourceId('Microsoft.Network/loadBalancers',parameters('loadBalancerNames')[1])]",
       "type": "string"
     }
 
