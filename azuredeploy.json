@@ -276,7 +276,7 @@
           "location": {
             "value": "[parameters('location')]"
           },
-          "publicIpNames": {
+          "publicIpName": {
             "value": "[variables('publicIpName')]"
           },
           "publicIPAddressType": {
