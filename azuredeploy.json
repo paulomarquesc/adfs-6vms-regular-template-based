@@ -191,9 +191,7 @@
     "storageAccountNamePrefix": "[concat(uniquestring(resourceGroup().id),'sa')]",
     "deployStorageAccountsUrl": "[concat(variables('baseUrl'),'/deployStorageAccounts.json')]",
     "deployPublicIPsUrl": "[concat(variables('baseUrl'),'/deployPublicIPs.json')]",
-    "publicIpNames": [
-       "wapLbPip"
-    ],
+    "publicIpName": "wapLbPip",
     "publicIPAddressType": "Static",
     "deployAvailabilitySetsUrl": "[concat(variables('baseUrl'),'/deployAvailabilitySets.json')]",
     "availabilitySetNames": [
@@ -234,7 +232,7 @@
       "rdpWap02"
     ],
     "lbPublicIpResourceIds": [
-      "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),variables('publicIpNames')[0])]"
+      "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),variables('publicIpName'))]"
     ],
     "deployNicsUrl": "[concat(variables('baseUrl'),'/deployNics.json')]",
     "deployNsgsUrl": "[concat(variables('baseUrl'),'/deployNsgs.json')]",
@@ -279,7 +277,7 @@
             "value": "[parameters('location')]"
           },
           "publicIpNames": {
-            "value": "[variables('publicIpNames')]"
+            "value": "[variables('publicIpName')]"
           },
           "publicIPAddressType": {
             "value": "[variables('publicIPAddressType')]"
@@ -421,11 +419,6 @@
               "[concat(parameters('adfsVmNamePrefix'),'2-nic')]",
               "[concat(parameters('wapVmNamePrefix'),'1-nic')]",
               "[concat(parameters('wapVmNamePrefix'),'2-nic')]"
-            ]
-          },
-          "publicIpAddressIds": {
-            "value": [
-              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[0])]"
             ]
           },
           "subnetIds": {

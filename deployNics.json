@@ -11,9 +11,6 @@
     "ipAddresses": {
       "type": "array"
     },
-    "publicIpAddressIds": {
-      "type": "array"
-    },
     "subnetIds": {
       "type": "array"
     },
