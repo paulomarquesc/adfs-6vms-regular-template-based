@@ -43,9 +43,6 @@
               "privateIPAddress": "[parameters('ipAddresses')[0]]",
               "subnet": {
                 "id": "[parameters('subnetIds')[0]]"
-              },
-              "publicIPAddress": {
-                "id": "[parameters('publicIpAddressIds')[0]]"
               }
             }
           }
@@ -67,9 +64,6 @@
               "privateIPAddress": "[parameters('ipAddresses')[1]]",
               "subnet": {
                 "id": "[parameters('subnetIds')[0]]"
-              },
-              "publicIPAddress": {
-                "id": "[parameters('publicIpAddressIds')[1]]"
               }
             }
           }
@@ -91,9 +85,6 @@
               "privateIPAddress": "[parameters('ipAddresses')[2]]",
               "subnet": {
                 "id": "[parameters('subnetIds')[0]]"
-              },
-              "publicIPAddress": {
-                "id": "[parameters('publicIpAddressIds')[2]]"
               },
               "loadBalancerBackendAddressPools": [
                 {
@@ -120,9 +111,6 @@
               "privateIPAddress": "[parameters('ipAddresses')[3]]",
               "subnet": {
                 "id": "[parameters('subnetIds')[0]]"
-              },
-              "publicIPAddress": {
-                "id": "[parameters('publicIpAddressIds')[3]]"
               },
               "loadBalancerBackendAddressPools": [
                 {

@@ -192,13 +192,9 @@
     "deployStorageAccountsUrl": "[concat(variables('baseUrl'),'/deployStorageAccounts.json')]",
     "deployPublicIPsUrl": "[concat(variables('baseUrl'),'/deployPublicIPs.json')]",
     "publicIpNames": [
-      "addc01Pip",
-      "addc02Pip",
-      "adfs01Pip",
-      "adfs02Pip",
-      "wapLbPip"
+       "wapLbPip"
     ],
-    "publicIPAddressType": "Dynamic",
+    "publicIPAddressType": "Static",
     "deployAvailabilitySetsUrl": "[concat(variables('baseUrl'),'/deployAvailabilitySets.json')]",
     "availabilitySetNames": [
       "addc-as",
@@ -238,7 +234,7 @@
       "rdpWap02"
     ],
     "lbPublicIpResourceIds": [
-      "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),variables('publicIpNames')[4])]"
+      "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),variables('publicIpNames')[0])]"
     ],
     "deployNicsUrl": "[concat(variables('baseUrl'),'/deployNics.json')]",
     "deployNsgsUrl": "[concat(variables('baseUrl'),'/deployNsgs.json')]",
@@ -429,11 +425,7 @@
           },
           "publicIpAddressIds": {
             "value": [
-              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[0])]",
-              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[1])]",
-              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[2])]",
-              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[3])]",
-              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[4])]"
+              "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpNames')[0])]"
             ]
           },
           "subnetIds": {
