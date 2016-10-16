@@ -155,21 +155,21 @@
       "metadata": {
         "description": "The vm size of the Domain Controllers"
       },
-      "defaultValue": "Standard_DS1"
+      "defaultValue": "Standard_DS2_V2"
     },
     "adfsVMsSize": {
       "type": "string",
       "metadata": {
         "description": "The vm size of the ADFS servers"
       },
-      "defaultValue": "Standard_DS1"
+      "defaultValue": "Standard_DS2_V2"
     },
     "wapVMsSize": {
       "type": "string",
       "metadata": {
         "description": "The vm size of the WAP servers"
       },
-      "defaultValue": "Standard_DS1"
+      "defaultValue": "Standard_DS2_v2"
     },
     "adminUsername": {
       "type": "string",
