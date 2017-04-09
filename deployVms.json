@@ -25,6 +25,9 @@
     },
     "storageAccountNamePrefix": {
       "type": "string"
+    },
+    "windowsServerSku":{
+      "type": "string"
     }
   },
   "resources": [
@@ -53,7 +56,7 @@
           "imageReference": {
             "publisher": "MicrosoftWindowsServer",
             "offer": "WindowsServer",
-            "sku": "2012-R2-Datacenter",
+            "sku": "[parameters('windowsServerSku')]",
             "version": "latest"
           },
           "osDisk": {

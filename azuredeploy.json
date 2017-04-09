@@ -184,10 +184,18 @@
       "metadata": {
         "description": "The password for the local Administrator account of the virtual machines"
       }
+    },
+    "windowsServerSku":{
+      "type": "string",
+      "defaultValue": "2012-R2-Datacenter",
+      "allowedValues": [
+        "2012-R2-Datacenter",
+        "2016-Datacenter"
+      ]
     }
   },
   "variables": {
-    "baseUrl": "https://raw.githubusercontent.com/paulomarquesc/adfs-6vms-regular-template-based/master/",
+    "baseUrl": "https://raw.githubusercontent.com/paulomarquesc/adfs-6vms-regular-template-based/update01/",
     "storageAccountNamePrefix": "[concat(uniquestring(resourceGroup().id),'sa')]",
     "deployStorageAccountsUrl": "[concat(variables('baseUrl'),'/deployStorageAccounts.json')]",
     "deployPublicIPsUrl": "[concat(variables('baseUrl'),'/deployPublicIPs.json')]",
@@ -497,6 +505,9 @@
           "availabilitySetName": {
             "value": "[variables('availabilitySetNames')[0]]"
           },
+          "windowsServerSku":{
+            "value": "[parameters('windowsServerSku')]"
+          },
           "vmCount": {
             "value": 2
           },
@@ -538,6 +549,9 @@
           "availabilitySetName": {
             "value": "[variables('availabilitySetNames')[1]]"
           },
+          "windowsServerSku":{
+            "value": "[parameters('windowsServerSku')]"
+          },
           "vmCount": {
             "value": 2
           },
@@ -575,6 +589,9 @@
           },
           "vmSize": {
             "value": "[parameters('wapVMsSize')]"
+          },
+          "windowsServerSku":{
+            "value": "[parameters('windowsServerSku')]"
           },
           "availabilitySetName": {
             "value": "[variables('availabilitySetNames')[2]]"
