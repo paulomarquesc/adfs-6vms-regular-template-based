@@ -1,0 +1,21 @@
+## Variables
+$resourceGroup = "avidadtest"
+$location = "westus2"
+$virtualNetworkUsage = "new"
+$adminUsername = "winadmin"
+
+# Set defaults
+az configure --defaults location=$location
+az configure --defaults group=$resourceGroup
+
+## Full Deployment
+az group create --name $resourceGroup
+az deployment group create --template-file azuredeploy.json --resource-group $resourceGroup --parameters adminUsername=$adminusername virtualNetworkUsage=$virtualnetworkusage 
+
+#add yourself to AzureAD logon
+$username=$(az account show --query user.name --output tsv)
+$myVMID=az vm list -o tsv --query "[].id" --resource-group $resourceGroup
+az role assignment create --role "Virtual Machine Administrator Login" --assignee $username --scope $myVMID
+
+#test DSC arm template deploy
+az deployment group create --template-file deployDSC.json --resource-group $resourceGroup --parameters gitHubUser=$gitHubUser gitHubRepo=$gitHubRepo configName=$configName remoteUser=$remoteUserAcct

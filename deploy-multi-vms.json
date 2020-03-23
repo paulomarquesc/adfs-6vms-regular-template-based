@@ -1,0 +1,234 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachineName": {
+            "defaultValue": "ZAVID-CLD-",
+            "type": "String"
+        },
+        "vmSize": {
+            "defaultValue": "Standard_NV12s_v3",
+            "type": "String"
+        },
+        "adminUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "Admin username for VM"
+            },
+            "defaultValue": "maint"
+        },
+        "numberOfInstances": {
+            "type": "int",
+            "defaultValue": 4,
+            "minValue": 2,
+            "maxValue": 65,
+            "metadata": {
+                "description": "Number of VMs to deploy."
+            }
+        },
+        "startNumberingAt": {
+            "type": "int",
+            "defaultValue": 1,
+            "metadata": {
+                "description": "Start numbering VMs from here."
+            }
+        },
+        "suffixLength": {
+            "type": "int",
+            "defaultValue": 2,
+            "metadata": {
+                "description": "Number of digits to append to vmname (NOTE: VM names must be less than 15 characters)."
+            }
+        },
+        "OS": {
+            "type": "string",
+            "defaultValue": "customImage",
+            "allowedValues": [
+                "Ubuntu",
+                "Windows",
+                "customImage"
+            ],
+            "metadata": {
+                "description": "OS Platform for the VM"
+            }
+        },
+        "customImageName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of custom image. Leave blank for generic platform images."
+            },
+            "defaultValue": "myCustomTemplate"
+        },
+        "virtualNetworkName": {
+            "type": "string",
+            "defaultValue": "myVirtualNetwork",
+            "metadata": {
+                "description": "Name of an existing vNet for the VMs."
+            }
+        },
+        "subnetName": {
+            "type": "string",
+            "defaultValue": "mySubnet",
+            "metadata": {
+                "description": "Name of an existing subnet to attach to the VMs."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        },
+        "authenticationType": {
+            "type": "string",
+            "defaultValue": "password",
+            "allowedValues": [
+                "sshPublicKey",
+                "password"
+            ],
+            "metadata": {
+                "description": "Type of authentication to use on the Virtual Machine."
+            }
+        },
+        "adminPasswordOrKey": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password for the VMs."
+            }
+        },
+
+        "domainFQDN": {
+            "type": "string",
+            "metadata": {
+                "description": "The FQDN of the AD domain to join."
+            }
+        },
+        "ouPath": {
+            "type": "string",
+            "metadata": {
+                "description": "The OU for the domain computer account. Enter the full distinguished name of the OU in quotation marks. Example: \"OU=testOU; DC=domain; DC=Domain; DC=com\""
+            }
+        },
+        "IPType": {
+            "type": "string",
+            "metadata": {
+                "description": "Set to Static to reserve IP."
+            },
+            "defaultValue": "Dynamic"
+        },
+        "domainUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "Username of the account on the domain"
+            }
+        },
+        "domainPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password of the account on the domain"
+            }
+        },
+        "domainJoinOptions": {
+            "type": "int",
+            "defaultValue": 3,
+            "metadata": {
+                "description": "Set of bit flags that define the join options. Default value of 3 is a combination of NETSETUP_JOIN_DOMAIN (0x00000001) & NETSETUP_ACCT_CREATE (0x00000002) i.e. will join the domain and create the account on the domain. For more information see https://msdn.microsoft.com/en-us/library/aa392154(v=vs.85).aspx"
+            }
+        }
+    },
+    "variables": {
+        "subnet1Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('virtualNetworkName'),parameters('subnetName'))]",
+        "Ubuntu": {
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "16.04.0-LTS",
+            "version": "latest"
+        },
+        "Windows": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "2019-Datacenter",
+            "version": "latest"
+        },
+        "customImage": {
+            "id": "[resourceId('Microsoft.Compute/images', parameters('customImageName'))]"
+        },
+        "imageReference": "[variables(parameters('OS'))]",
+        "linuxConfiguration": {
+            "disablePasswordAuthentication": true,
+            "ssh": {
+                "publicKeys": [
+                    {
+                        "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
+                        "keyData": "[parameters('adminPasswordOrKey')]"
+                    }
+                ]
+            }
+        }
+    },
+    "resources": [
+
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[concat('nic-',parameters('virtualMachineName'),padleft(string(copyIndex(parameters('startNumberingAt'))),parameters('suffixLength'),'0'))]",
+            "apiVersion": "2016-03-30",
+            "location": "[parameters('location')]",
+            "copy": {
+                "name": "nicLoop",
+                "count": "[parameters('numberOfInstances')]"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "[parameters('IPType')]",
+                            "subnet": {
+                                "id": "[variables('subnet1Ref')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[concat(parameters('virtualMachineName'),padleft(string(copyIndex(parameters('startNumberingAt'))),parameters('suffixLength'),'0'))]",
+            "apiVersion": "2016-04-30-preview",
+            "location": "[parameters('location')]",
+            "copy": {
+                "name": "virtualMachineLoop",
+                "count": "[parameters('numberOfInstances')]"
+            },
+            "dependsOn": [
+                "nicLoop"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize')]"
+                },
+                "osProfile": {
+                    "computerName": "[concat(parameters('virtualMachineName'),padleft(string(copyIndex(parameters('startNumberingAt'))),parameters('suffixLength'),'0'))]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPasswordOrKey')]",
+                    "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]",
+                    "timeZone": "Pacific Standard Time"
+                },
+                "storageProfile": {
+                    "imageReference": "[variables('imageReference')]",
+                    "osDisk": {
+                        "createOption": "Attach"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('virtualMachineName'),padleft(string(copyIndex(parameters('startNumberingAt'))),parameters('suffixLength'),'0'),'nic'))]"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
